@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+</head>
+<body style="margin: 40px;">
+    <h2>Template 사용법</h2>
+    <hr>
+    {% if name %}
+        <h1>Hello {{name | upper()}}!!!</h1>
+    {% else %}
+        <h1>Hello World!!!</h1>
+    {% endif %}
+    <br>
+    <ul>
+    {% for key, value in dt.items() %}  
+        <li>{{key}} : {{value}}</li>
+    {% endfor %} 
+    </ul>
+    <h3>Flask에서는 dt['key1'] 대신에 dt.key1 과 같이 사용할 수 있음</h3>
+    <h3>dt['key1'] = {{dt['key1']}}</h3>
+    <h3>dt.key1 = {{dt.key1}}</h3>
+    {% for i in range(3) %}
+        <h4>{{i}}</h4>
+    {% endfor %}
+    <h3>{{item | default('item값이 지정되지 않았을 때 사용되는 값')}}</h3>
+</body>
+</html>

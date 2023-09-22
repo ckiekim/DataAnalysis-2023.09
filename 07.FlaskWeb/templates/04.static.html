@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Resource</title>
+    <script src="{{url_for('static', filename='js/05.hello.js')}}"></script>
+</head>
+<body style="margin: 40px;">
+    <h2>Static Resource</h2>
+    <hr>
+    <img src="{{url_for('static', filename='img/cat.jpg', q=mtime)}}" height="400">
+    <h4>{{url_for('static', filename='img/cat.jpg', q=mtime)}}</h4>
+    <hr>
+    <button onclick="sayHello()">Say Hello</button>
+</body>
+</html>

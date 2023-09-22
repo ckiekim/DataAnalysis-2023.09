@@ -32,5 +32,21 @@ def sample():
         b = int(request.form['b'])
         return f'<h1>a={a}, b={b}, a * b = {a*b}</h1>'
 
+# localhost:5000/user/james, localhost:5000/user/maria 
+@app.route('/user/<uname>')
+def user(uname):
+    return f'<h1>uname = {uname}</h1>'
+
+# localhost:5000/square/12
+@app.route('/square/<int:number>')
+def square(number):
+    return f'<h1>{number} ** 2 = {number ** 2}</h1>'
+
+# localhost:5000/circle/3.14/and/10
+@app.route('/circle/<float:pi>/and/<float:radius>')
+def circle(pi, radius):
+    result = pi * radius ** 2
+    return f'<h1>pi={pi}, radius={radius}, area={result}</h1>'
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멜론 차트 Top 50</title>
+    <style>
+        td, th { padding: 2px; text-align: center; }
+    </style>
+</head>
+<body style="margin: 40px;">
+    <h3>멜론 차트 Top 50</h3>
+    <hr>
+    <table border="1">
+        <tr>
+            <th>순위</th>
+            <th>이미지</th>
+            <th>제목</th>
+            <th>아티스트</th>
+            <th>앨범</th>
+        </tr>
+        {% for song in song_list %}
+            <tr>
+                <td>{{song.순위}}</td>
+                <td><img src="{{song.이미지}}" height="32"></td>
+                <td>{{song.제목}}</td>
+                <td>{{song.아티스트}}</td>
+                <td>{{song.앨범}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

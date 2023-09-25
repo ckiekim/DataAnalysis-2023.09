@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산점도</title>
+</head>
+<body style="margin: 40px;">
+    <h2>산점도</h2>
+    <hr>
+    <img src="{{url_for('static', filename='img/scatter.png')}}"><br>
+    <!-- <h4>X축: 정규분포(평균={{avg}}, 표준편차={{std}})</h4>
+    <h4>Y축: 균등분포(최소={{min}}, 최대={{max}})</h4> -->
+    <h4>X축: 정규분포(평균={{params.avg}}, 표준편차={{params.std}})</h4>
+    <h4>Y축: 균등분포(최소={{params.min}}, 최대={{params.max}})</h4>
+    <br><br>
+    <button onclick="location.href='/scatter'">재실행</button>
+</body>
+</html>

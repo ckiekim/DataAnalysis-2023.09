@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산점도</title>
+    <style>
+        td { text-align: center; padding: 5px; }
+    </style>
+</head>
+<body style="margin: 40px;">
+    <h2>산점도</h2>
+    <hr>
+    <form action="/scatter" method="post">
+        <table>
+            <tr>
+                <td>갯수(num)</td>
+                <td><input type="text" name="num"></td>
+            </tr>
+            <tr>
+                <td>평균(avg)</td>
+                <td><input type="text" name="avg"></td>
+            </tr>
+            <tr>
+                <td>표준편차(std)</td>
+                <td><input type="text" name="std"></td>
+            </tr>
+            <tr>
+                <td>최소값(min)</td>
+                <td><input type="text" name="min"></td>
+            </tr>
+            <tr>
+                <td>최대값(max)</td>
+                <td><input type="text" name="max"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="제출"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울시 구별 CCTV/인구 현황</title>
+</head>
+<body style="margin: 40px;">
+    <h3>서울시 구별 CCTV 설치댓수</h3>
+    <hr>
+    <iframe src="{{url_for('static', filename='img/cctv.html')}}" frameborder="1"
+        width="800" height="500"></iframe>
+    <button onclick="location.href='/cctv'">재실행</button>
+</body>
+</html>

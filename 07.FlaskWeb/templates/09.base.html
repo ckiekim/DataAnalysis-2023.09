@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body style="margin: 40px;">
+    <h3><strong>{% block subtitle %}{% endblock %}</strong></h3>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

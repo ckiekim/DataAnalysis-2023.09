@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bootstrap{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        * { font-family: 'Noto Sans KR', sans-serif; }
+        a { text-decoration: none; }
+    </style>
+    {% block additional_head %}{% endblock %}
+</head>
+<body>
+    <div class="container-fluid p-3 bg-primary text-white text-center">
+        <h1>My Bootstrap Page</h1>
+        <p>{% block subtitle %}{% endblock %}</p>
+    </div>
+    <div class="container mt-3">
+        {% block content %}{% endblock %}
+    </div>
+    {% block additional_body %}{% endblock %}
+</body>
+</html>

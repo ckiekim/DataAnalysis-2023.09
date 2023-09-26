@@ -1,0 +1,36 @@
+{% extends "10.bootstrap.html" %}
+{% block title %}부트스트랩{% endblock %}
+{% block subtitle %}List Groups{% endblock %}
+{% block content %}
+
+        <h2>Basic List Group</h2>
+        <ul class="list-group">
+            <li class="list-group-item">First item</li>
+            <li class="list-group-item active">Active item</li>
+            <li class="list-group-item">Third item</li>
+        </ul>   
+             
+        <h2 class="mt-3">List Group With Linked Items</h2>
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action text-center">First item</a>
+            <a href="#" class="list-group-item list-group-item-action">Second item</a>
+            <a href="#" class="list-group-item disabled text-end">Third item</a>
+        </div>
+
+        <h2 class="mt-3">Numbered List Group</h2>
+        <ol class="list-group list-group-numbered">
+            <li class="list-group-item">First item</li>
+            <li class="list-group-item">Second item</li>
+            <li class="list-group-item">Third item</li>
+        </ol>
+
+        <h2 class="mt-3">Horizontal List Groups</h2>
+        <p>The .list-group-horizontal class displays the list items horizontally instead of vertically:</p>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">First item</li>
+            <li class="list-group-item">Second item</li>
+            <li class="list-group-item active">Active item</li>
+            <li class="list-group-item">Fourth item</li>
+        </ul>
+
+{% endblock %}

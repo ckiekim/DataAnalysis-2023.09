@@ -1,0 +1,8 @@
+{% extends "10.bootstrap.html" %}
+{% block subtitle %}File upload{% endblock %}
+{% block content %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        파일 선택: <input type="file" name="image">
+        <input type="submit" value="업로드">
+    </form>
+{% endblock %}

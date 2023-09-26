@@ -10,7 +10,13 @@ def index():
 def list():
     return render_template('10.list.html')
 
+@app.route('/form')
+def form():
+    return render_template('10.form.html')
 
+@app.route('/modal')
+def modal():
+    return render_template('10.modal.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

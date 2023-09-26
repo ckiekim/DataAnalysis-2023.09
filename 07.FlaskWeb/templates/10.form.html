@@ -1,0 +1,56 @@
+{% extends "10.bootstrap.html" %}
+{% block additional_head %}
+    <style>
+        td  { text-align: center; }
+    </style>
+{% endblock %}
+{% block subtitle %}Forms{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-5">
+            <h2>Stacked Form</h2>
+            <form action="/login1" method="post">
+                <div class="mb-3 mt-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                </div>
+                <div class="mb-3">
+                    <label for="pwd" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                </div>
+                <div class="form-check mb-3">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember" checked> Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>                
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <h2 class="mb-5">테이블과 결합한 Form</h2>
+            <form action="/login2" method="post">
+                <table class="table table-borderless">
+                    <tr>
+                        <td style="width: 30%;"><label class="col-form-label">이메일</label></td>
+                        <td style="width: 70%;"><input type="text" name="email" class="form-control" placeholder="Enter email"></td>
+                    </tr>
+                    <tr>
+                        <td><label class="col-form-label">패스워드</label></td>
+                        <td><input type="password" name="pswd" class="form-control" placeholder="Enter password"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit" class="btn btn-primary">로그인</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "10.bootstrap.html" %}
+{% block subtitle %}File upload 결과{% endblock %}
+{% block content %}
+    <img src="{{url_for('static', filename=fname)}}", width="600"><br>
+    <span>파일이름: {{fname}}</span>
+{% endblock %}

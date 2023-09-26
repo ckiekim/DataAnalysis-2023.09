@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울시 구별 CCTV/인구 현황</title>
+</head>
+<body style="margin: 40px;">
+    <h3>서울시 구별 CCTV/인구 현황</h3>
+    <hr>
+    <form action="/cctv_pop" method="post">
+        항목: 
+        <select name="column">
+            {% for column in columns %}
+                <option value="{{column}}">{{column}}</option>
+            {% endfor %}
+        </select>
+        &nbsp;&nbsp;&nbsp;컬러맵:
+        <select name="colormap">
+            {% for colormap in colormaps %}
+                <option value="{{colormap}}">{{colormap}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="제출">
+    </form>
+</body>
+</html>

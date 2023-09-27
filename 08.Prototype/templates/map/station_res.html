@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영등포 주요 지하철역</title>
+</head>
+<body style="margin: 40px;">
+    <h3>영등포 주요 지하철역</h3>
+    <hr>
+    <iframe src="{{url_for('static', filename='img/station_map.html')}}" frameborder="1"
+        width="800" height="500"></iframe>
+    <button onclick="location.href='/station'">재실행</button>
+</body>
+</html>

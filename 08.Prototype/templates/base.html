@@ -32,9 +32,18 @@
                         <i class="fa-solid fa-brain"></i> 크롤링
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/interpark">인터파크</a></li>
-                        <li><a class="dropdown-item" href="/melon">멜론차트</a></li>
-                        <li><a class="dropdown-item" href="/siksin">식신</a></li>
+                        <li><a class="dropdown-item" href="/crawling/interpark">인터파크</a></li>
+                        <li><a class="dropdown-item" href="/crawling/melon">멜론차트</a></li>
+                        <li><a class="dropdown-item" href="/crawling/siksin">식신</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown ms-3">
+                    <a class="nav-link dropdown-toggle {% if menu.ma %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-brain"></i> 지도
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/map/station">지하철역</a></li>
+                        <li><a class="dropdown-item" href="/map/cctv_pop">CCTV/인구</a></li>
                     </ul>
                 </li>
                 <li class="nav-item ms-3">
@@ -109,6 +118,13 @@
             </span>
         </div>
     </nav>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+                alert("{{messages[-1]}}");
+            </script>
+        {% endif %}
+    {% endwith %}
     {% block additional_body %}{% endblock %}
 </body>
 </html>

@@ -1,35 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인터파크 베스트셀러</title>
+{% extends "base.html" %}
+{% block additional_head %}
     <style>
-        td, th { padding: 2px; }
+        td, th { text-align: center; }
     </style>
-</head>
-<body style="margin: 40px;">
-    <h3>인터파크 베스트셀러</h3>
-    <hr>
-    <table border="1">
+{% endblock %}
+{% block subtitle %}인터파크 베스트셀러{% endblock %}
+{% block content %}
+    <table class="table">
         <tr>
-            <th>순위</th>
-            <th>이미지</th>
-            <th>제목</th>
-            <th>저자</th>
-            <th>출판사</th>
-            <th>가격</th>
+            <th style="width: 8%;">순위</th>
+            <th style="width: 12%;">이미지</th>
+            <th style="width: 30%;">제목</th>
+            <th style="width: 20%;">저자</th>
+            <th style="width: 18%;">출판사</th>
+            <th style="width: 10%;">가격</th>
         </tr>
         {% for book in book_list %}
             <tr>
-                <td style="text-align: center;">{{book.순위}}</td>
-                <td style="text-align: center;"><img src="{{book.src}}" height="40"></td>
+                <td>{{book.순위}}</td>
+                <td><img src="{{book.src}}" height="40"></td>
                 <td><a href="{{book.href}}" target="_blank">{{book.제목}}</a></td>
-                <td style="text-align: center;">{{book.저자}}</td>
-                <td style="text-align: center;">{{book.출판사}}</td>
+                <td>{{book.저자}}</td>
+                <td>{{book.출판사}}</td>
                 <td style="text-align: right;">{{book.가격}}</td>
             </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}

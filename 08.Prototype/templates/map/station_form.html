@@ -2,11 +2,19 @@
 {% block subtitle %}지하철역{% endblock %}
 {% block content %}
     <form action="/map/station" method="post">
-        <input type="text" name="station">
-        <input type="text" name="station">
-        <input type="text" name="station">
-        <input type="text" name="station">
-        <input type="text" name="station">
-        <input type="submit" value="제출">
+        <table class="table table-borderless">
+            <tr>
+                <td><input type="text" name="station" class="form-control"></td>
+                <td><input type="text" name="station" class="form-control"></td>
+                <td><input type="text" name="station" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="station" class="form-control"></td>
+                <td><input type="text" name="station" class="form-control"></td>
+                <td style="text-align: center;">
+                    <button class="btn btn-primary" type="submit">제출</button>
+                </td>
+            </tr>
+        </table>
     </form>
 {% endblock %}

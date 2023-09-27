@@ -102,3 +102,25 @@ def get_cctv_pop(static_path, column, colormap):
                         html=f'<span style="font-size: 10pt">{gu_name}</span>')
     ).add_to(map)
     map.save(f'{static_path}/img/cctv_pop.html')
+
+def get_coord(static_path, place):
+    filename = os.path.join(static_path, 'keys/도로명주소apiKey.txt')
+    with open(filename) as file:
+        road_key = file.read()
+    base_url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
+    params1 = f'confmKey={road_key}&currentPage=1&countPerPage=10'
+    params2 = f'keyword={quote(place)}&resultType=json'
+    url = f'{base_url}?{params1}&{params2}'
+    result = requests.get(url).json()
+    road_addr = result['results']['juso'][0]['roadAddr']
+
+    filename = os.path.join(static_path, 'keys/카카오apiKey.txt')
+    with open(filename) as file:
+        kakao_key = file.read()
+    base_url = 'https://dapi.kakao.com/v2/local/search/address.json'
+    header = {'Authorization': f'KakaoAK {kakao_key}'}
+    url = f'{base_url}?query={quote(road_addr)}'
+    result = requests.get(url, headers=header).json()
+    lat = float(result['documents'][0]['y'])
+    lng = float(result['documents'][0]['x'])
+    return lat, lng

@@ -19,7 +19,7 @@ function addrSubmit() {
     $.ajax({
         type: 'GET',
         url: '/change_addr',
-        data: {addr: addr},
+        data: {addr: addr},             // /change_addr?addr=서울시 강남구
         success: function(msg) {
             $('#addr').html(msg);
         }

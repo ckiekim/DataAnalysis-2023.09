@@ -4,7 +4,11 @@ def get_anniv(aid):
     conn = sq.connect('test.db')
     cur = conn.cursor()
     sql = 'select * from anniversary where aid=?'
-    pass
+    cur.execute(sql, (aid, ))
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+    return row
 
 # start date ~ end date, uid field가 'admin' 또는 uid
 def get_anniv_list(sdate, edate, uid):
@@ -14,28 +18,44 @@ def get_anniv_list(sdate, edate, uid):
         sql = 'select * from anniversary where adate between ? and ? and uid=?'
     else:
         sql = "select * from anniversary where adate between ? and ? and (uid='admin' or uid=?)"
-    pass
+    cur.execute(sql, (sdate, edate, uid))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
 
 def insert_anniv(params):
     conn = sq.connect('test.db')
     cur = conn.cursor()
     sql = 'insert into anniversary(aname, adate, is_holiday, uid) values (?,?,?,?)'
-    pass
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def insert_anniv_many(params_list):
     conn = sq.connect('test.db')
     cur = conn.cursor()
     sql = 'insert into anniversary(aname, adate, is_holiday, uid) values (?,?,?,?)'
-    pass
+    cur.executemany(sql, params_list)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def update_anniv(params):
     conn = sq.connect('test.db')
     cur = conn.cursor()
     sql = 'update anniversary set aname=?, adate=?, is_holiday=? where aid=?'
-    pass
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def delete_anniv(aid):
     conn = sq.connect('test.db')
     cur = conn.cursor()
     sql = 'delete from anniversary where aid=?'
-    pass
+    cur.execute(sql, (aid, ))
+    conn.commit()
+    cur.close()
+    conn.close()

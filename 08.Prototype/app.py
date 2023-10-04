@@ -54,10 +54,5 @@ def home():
     # flash('Welcome to my Web!!!')
     return render_template('home.html', menu=menu)
 
-""" @app.route('/schedule')
-def schedule():
-    menu = {'ho':0, 'us':0, 'cr':0, 'ma':0, 'sc':1}
-    return render_template('schedule.html', menu=menu) """
-
 if __name__ == '__main__':
     app.run(debug=True)

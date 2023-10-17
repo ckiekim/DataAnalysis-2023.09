@@ -46,6 +46,17 @@
                         <li><a class="dropdown-item" href="/map/cctv_pop">CCTV/인구</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown ms-3">
+                    <a class="nav-link dropdown-toggle {% if menu.cb %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-brain"></i> 챗봇
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/chatbot/counsel">심리상담</a></li>
+                        <li><a class="dropdown-item" href="/chatbot/bard">구글 바드</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/chatbot/genImg">이미지 생성</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item ms-3">
                     <a class="nav-link {% if menu.sc %}active{% endif %}" href="{% if menu.sc %}#{% else %}/schedule/calendar/this{% endif %}"><i class="fa-solid fa-calendar-days"></i> 스케쥴</a>
                 </li>

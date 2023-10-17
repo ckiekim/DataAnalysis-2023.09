@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, session
 from bp.crawling import crawl_bp
 from bp.map import map_bp
 from bp.user import user_bp
+from bp.chatbot import chatbot_bp
 from bp.schedule import schdedule_bp
 import os, random
 import util.map_util as mu
@@ -14,6 +15,7 @@ app.config['SESSION_COOKIE_PATH'] = '/'
 app.register_blueprint(crawl_bp, url_prefix='/crawling')    # localhost:5000/crawling/* 는 crawl bp가 처리
 app.register_blueprint(map_bp, url_prefix='/map')
 app.register_blueprint(user_bp, url_prefix='/user')
+app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
 app.register_blueprint(schdedule_bp, url_prefix='/schedule')
 
 @app.before_first_request

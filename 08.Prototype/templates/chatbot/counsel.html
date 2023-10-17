@@ -9,7 +9,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/chatbot/counsel',
-                data: {userInput, userInput},
+                data: {userInput: userInput},
                 success: function(result) {
                     let obj = JSON.parse(result);
 					$('<div></div>')
@@ -49,7 +49,7 @@
             <button class="btn btn-primary" type="submit" onclick="send()">전송</button>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" style="margin-bottom: 80px;">
         <div class="container overflow-auto" id="container" style="width: 80%; height: 600px;">
         </div>
    </div>

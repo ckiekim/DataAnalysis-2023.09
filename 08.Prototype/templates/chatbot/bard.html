@@ -4,36 +4,40 @@
     <script>
         function send() {
             let userInput = $('#userInput').val();
-            $('#userInput').val('')
-            let mark = 'mark' + Math.floor(Math.random() * 100000)
+            $('<img></img>')
+                .attr({src: "{{url_for('static', filename='img/please-wait.gif')}}", id: 'waitImg'})
+                .prependTo('#container');
+            let mark = 'mark' + Date.now();
             $.ajax({
                 type: 'POST',
                 url: '/chatbot/bard',
                 data: {userInput: userInput},
                 success: function(result) {
+                    $('#waitImg').remove();
+                    $('#userInput').val('');
                     let obj = JSON.parse(result);
 					$('<div></div>')
-							.attr({'class': 'd-flex flex-row mt-1', id: mark+'1'})
-							.appendTo('#container');
+							.attr({'class': 'd-flex flex-row-reverse mt-1', id: mark+'1'})
+							.prependTo('#container');
 						$('<div></div>')
-							.attr({'class': 'card w-75', id: mark+'2'}).appendTo('#'+mark+'1');
+							.attr({'class': 'card bg-light text-dark w-75', id: mark+'2'}).appendTo('#'+mark+'1');
 						$('<div></div>')
-							.attr({'class': 'card-body', id: mark+'3'}).appendTo('#'+mark+'2');
+							.attr({'class': 'card-body text-end', id: mark+'3'}).appendTo('#'+mark+'2');
+                        $('<span></span>')
+                            .text(obj.user+' ').appendTo('#'+mark+'3');
 						$('<img></img>')
 							.attr({src: "{{url_for('static', filename='img/person.png')}}", height: '32'}).appendTo('#'+mark+'3');
-						$('<span></span>')
-							.text(' '+obj.user).appendTo('#'+mark+'3');
 					$('<div></div>')
-							.attr({'class': 'd-flex flex-row-reverse mt-1', id: mark+'6'})
-							.appendTo('#container');
+							.attr({'class': 'd-flex flex-row mt-1', id: mark+'6'})
+							.prependTo('#container');
 						$('<div></div>')
-							.attr({'class': 'card bg-light text-dark w-75', id: mark+'7'}).appendTo('#'+mark+'6');
+							.attr({'class': 'card', id: mark+'7'}).appendTo('#'+mark+'6');
 						$('<div></div>')
-							.attr({'class': 'card-body text-end', id: mark+'8'}).appendTo('#'+mark+'7');
+							.attr({'class': 'card-body', id: mark+'8'}).appendTo('#'+mark+'7');
+                        $('<img></img>')
+                            .attr({src: "{{url_for('static', filename='img/bard-logo.png')}}", height: '32'}).appendTo('#'+mark+'8');                    
 						$('<span></span>')
-							.html(obj.chatbot.replaceAll('\n','<br>')+' ').appendTo('#'+mark+'8');
-						$('<img></img>')
-							.attr({src: "{{url_for('static', filename='img/bard-logo.png')}}", height: '32'}).appendTo('#'+mark+'8');                    
+							.html(' '+obj.chatbot.replaceAll('\n','<br>')).appendTo('#'+mark+'8');
                 }
             });
         }

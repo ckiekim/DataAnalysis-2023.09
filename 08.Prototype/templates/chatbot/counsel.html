@@ -4,8 +4,8 @@
     <script>
         function send() {
             let userInput = $('#userInput').val();
-            $('#userInput').val('')
-            let mark = 'mark' + Math.floor(Math.random() * 100000)
+            $('#userInput').val('');
+            let mark = 'mark' + Date.now();
             $.ajax({
                 type: 'POST',
                 url: '/chatbot/counsel',
@@ -49,7 +49,7 @@
             <button class="btn btn-primary" type="submit" onclick="send()">전송</button>
         </div>
     </div>
-    <div class="d-flex justify-content-center" style="margin-bottom: 80px;">
+    <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
         <div class="container overflow-auto" id="container" style="width: 80%; height: 600px;">
         </div>
    </div>

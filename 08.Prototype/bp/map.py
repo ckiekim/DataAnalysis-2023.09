@@ -3,7 +3,7 @@ import util.map_util as mu
 
 map_bp = Blueprint('map_bp', __name__)
 
-menu = {'ho':0, 'us':0, 'cr':0, 'ma':1, 'sc':0}
+menu = {'ho':0, 'us':0, 'cr':0, 'ma':1, 'cb':0, 'sc':0}
 
 @map_bp.route('/station', methods=['GET','POST'])
 def station():

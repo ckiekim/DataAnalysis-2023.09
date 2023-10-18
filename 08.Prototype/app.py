@@ -52,7 +52,7 @@ def weather():
 
 @app.route('/')
 def home():
-    menu = {'ho':1, 'us':0, 'cr':0, 'ma':0, 'sc':0}
+    menu = {'ho':1, 'us':0, 'cr':0, 'ma':0, 'cb':0, 'sc':0}
     # flash('Welcome to my Web!!!')
     return render_template('home.html', menu=menu)
 

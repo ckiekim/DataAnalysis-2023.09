@@ -3,7 +3,7 @@ import util.crawl_util as cu
 
 crawl_bp = Blueprint('crawl_bp', __name__)
 
-menu = {'ho':0, 'us':0, 'cr':1, 'ma':0, 'sc':0}
+menu = {'ho':0, 'us':0, 'cr':1, 'ma':0, 'cb':0, 'sc':0}
 
 @crawl_bp.route('/melon')
 def melon():

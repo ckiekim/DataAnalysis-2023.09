@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, current_app
 import json, os
-import openai
+import bardapi, openai
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -34,14 +34,22 @@ def counsel():
 
 @chatbot_bp.route('/bard', methods=['GET','POST'])
 def bard():
-    pass
+    if request.method == 'GET':
+        return render_template('chatbot/bard.html', menu=menu)
+    else:
+        with open(os.path.join(current_app.static_folder, 'keys/bardApiKey.txt')) as file:
+            os.environ['_BARD_API_KEY'] = file.read()
+        user_input = request.form['userInput']
+        response = bardapi.core.Bard().get_answer(user_input)
+        result = {'user':user_input, 'chatbot':response['content']}
+        return json.dumps(result)
 
 @chatbot_bp.route('/genImg', methods=['GET','POST'])
 def gen_img():
     if request.method == 'GET':
         return render_template('chatbot/genImg.html', menu=menu)
     else:
-        with open(os.path.join(current_app.static_folder, 'keys/openAIapikey.txt')) as file:
+        with open(os.path.join(current_app.static_folder, 'keys/openAiApiKey.txt')) as file:
             openai.api_key = file.read()
         user_input = request.form['userInput'] 
         size = request.form['size']
@@ -60,5 +68,4 @@ def gen_img():
         )
         img_url = dalle_response['data'][0]['url']
         result = {'img_url':img_url, 'translated_text': prompt}
-
         return json.dumps(result) 

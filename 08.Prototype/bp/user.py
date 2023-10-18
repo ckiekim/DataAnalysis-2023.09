@@ -2,7 +2,7 @@ from flask import Blueprint, session, redirect, flash
 
 user_bp = Blueprint('user_bp', __name__)
 
-menu = {'ho':0, 'us':1, 'cr':0, 'ma':0, 'sc':0}
+menu = {'ho':0, 'us':1, 'cr':0, 'ma':0, 'cb':0, 'sc':0}
 
 @user_bp.route('/login')
 def login():

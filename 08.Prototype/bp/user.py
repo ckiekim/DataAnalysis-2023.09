@@ -64,6 +64,11 @@ def register():
 
 @user_bp.route('/list')
 def list():
+    try:
+        _ = session['uid']
+    except:
+        flash('로그인을 먼저 하세요.')
+        return redirect('/user/login')
     user_list = udao.get_user_list()
     return render_template('user/list.html', user_list=user_list, menu=menu)
 

@@ -7,6 +7,7 @@ from bp.schedule import schdedule_bp
 import os, random
 import util.map_util as mu
 import util.weather_util as wu
+import util.image_util as iu
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'       # flash와 session을 사용하려면 반드시 설정해야 함
@@ -48,6 +49,13 @@ def weather():
     html = wu.get_weather(app.static_folder, lat, lng)
     return html
 
+@app.route('/change_profile', methods=['POST'])
+def change_profile():
+    file_image = request.files['image']
+    filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
+    file_image.save(filename)
+    mtime = iu.change_profile(app.static_folder, filename)
+    return str(mtime)
 ###################################################
 
 @app.route('/')

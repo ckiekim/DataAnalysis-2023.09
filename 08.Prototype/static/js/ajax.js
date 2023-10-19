@@ -52,7 +52,7 @@ function imageSubmit() {
         contentType: false,
         success: function(result) {
             $('#imageInput').attr('class', 'mt-2 d-none');
-            let fname = 'http://127.0.0.1:5000/static/data/profile.png?q=' + result;
+            let fname = '/static/data/profile.png?q=' + result;
             $('#profile').attr('src', fname);
         }
     });

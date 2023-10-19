@@ -87,7 +87,7 @@ def update():
         udao.update_user((hashed_pwd, uname, email, uid))
         return redirect('/user/list')
     
-@user_bp.route('/delete_modal')
+@user_bp.route('/delete')
 def delete_modal():
     udao.delete_user(session['uid'])
     return redirect('/user/logout')

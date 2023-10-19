@@ -1,7 +1,7 @@
 import sqlite3 as sq
 
 def get_anniv(aid):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     sql = 'select * from anniversary where aid=?'
     cur.execute(sql, (aid, ))
@@ -12,7 +12,7 @@ def get_anniv(aid):
 
 # start date ~ end date, uid field가 'admin' 또는 uid
 def get_anniv_list(sdate, edate, uid):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     if uid == 'admin':
         sql = 'select * from anniversary where adate between ? and ? and uid=?'
@@ -25,7 +25,7 @@ def get_anniv_list(sdate, edate, uid):
     return rows
 
 def insert_anniv(params):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     sql = 'insert into anniversary(aname, adate, is_holiday, uid) values (?,?,?,?)'
     cur.execute(sql, params)
@@ -34,7 +34,7 @@ def insert_anniv(params):
     conn.close()
 
 def insert_anniv_many(params_list):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     sql = 'insert into anniversary(aname, adate, is_holiday, uid) values (?,?,?,?)'
     cur.executemany(sql, params_list)
@@ -43,7 +43,7 @@ def insert_anniv_many(params_list):
     conn.close()
 
 def update_anniv(params):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     sql = 'update anniversary set aname=?, adate=?, is_holiday=? where aid=?'
     cur.execute(sql, params)
@@ -52,7 +52,7 @@ def update_anniv(params):
     conn.close()
 
 def delete_anniv(aid):
-    conn = sq.connect('./db_sqlite/test.db')
+    conn = sq.connect('./db_sqlite/project.db')
     cur = conn.cursor()
     sql = 'delete from anniversary where aid=?'
     cur.execute(sql, (aid, ))

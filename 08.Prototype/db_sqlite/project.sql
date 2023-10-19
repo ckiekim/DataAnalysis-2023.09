@@ -1,4 +1,4 @@
-create table anniversary (
+CREATE TABLE anniversary (
     aid integer primary key autoincrement,
     aname text not null,
     adate text not null,
@@ -16,4 +16,11 @@ CREATE TABLE schedule (
     end_time text,
     is_important int default 0,
     memo text
+);
+
+CREATE TABLE user (
+    uid text primary key,
+    pwd text not null,
+    uname text not null,
+    email text
 );

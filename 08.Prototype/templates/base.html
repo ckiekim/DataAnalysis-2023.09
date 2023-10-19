@@ -25,7 +25,7 @@
                     <a class="nav-link {% if menu.ho %}active{% endif %}" href="{% if menu.ho %}#{% else %}/{% endif %}"><i class="fas fa-home"></i> Home</a>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link {% if menu.us %}active{% endif %}" href="/user"><i class="fas fa-user-friends"></i> 사용자</a>
+                    <a class="nav-link {% if menu.us %}active{% endif %}" href="{% if menu.us %}#{% else %}/user/list{% endif %}"><i class="fas fa-user-friends"></i> 사용자</a>
                 </li>
                 <li class="nav-item dropdown ms-3">
                     <a class="nav-link dropdown-toggle {% if menu.cr %}active{% endif %}" href="#" data-bs-toggle="dropdown">

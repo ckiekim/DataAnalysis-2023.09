@@ -19,28 +19,7 @@ app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
 app.register_blueprint(schdedule_bp, url_prefix='/schedule')
 
-@app.before_first_request
-def before_first_request():         # 최초 1회 실행
-    global quotes
-    filename = os.path.join(app.static_folder, 'data/todayQuote.txt')
-    with open(filename, encoding='utf-8') as file:
-        quotes = file.readlines()
-    session['quote'] = random.sample(quotes, 1)[0]
-    session['addr'] = '서울시 영등포구'
-
 # for AJAX ###################################################
-@app.route('/change_quote')
-def change_quote():
-    quote = random.sample(quotes, 1)[0]
-    session['quote'] = quote
-    return quote
-
-@app.route('/change_addr')
-def change_addr():
-    addr = request.args.get('addr')
-    session['addr'] = addr
-    return addr
-
 @app.route('/weather')
 def weather():
     # 서울시 영등포구 + '청' -> 도로명 주소 -> 카카오 로컬 -> 좌표 획득

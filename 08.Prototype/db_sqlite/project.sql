@@ -22,5 +22,14 @@ CREATE TABLE user (
     uid text primary key,
     pwd text not null,
     uname text not null,
-    email text
+    email text not null
+);
+
+CREATE TABLE profile (
+    email text primary key,
+    image text,
+    stateMsg text,
+    github text,
+    insta text,
+    addr text
 );

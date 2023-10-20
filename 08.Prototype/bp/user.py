@@ -1,7 +1,8 @@
 from flask import Blueprint, request, render_template, session, current_app
 from flask import redirect, flash
-import hashlib, base64, json, os
+import hashlib, base64, json, os, random
 import db_sqlite.user_dao as udao
+import db_sqlite.profile_dao as pdao
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -23,6 +24,14 @@ def login():
                 flash(f'{user_info[2]}님 환영합니다.')        # 초기 화면으로 보내줌
                 session['uid'] = uid        # 세션값을 설정함으로써 사용자가 로그인하였음을 알게 해줌
                 session['uname'] = user_info[2]
+                email = user_info[3]
+                profile = pdao.get_profile(email)
+                session['profile'] = profile
+                if profile[2] == None:
+                    filename = os.path.join(current_app.static_folder, 'data/todayQuote.txt')
+                    with open(filename, encoding='utf-8') as file:
+                        quotes = file.readlines()
+                    session['quote'] = random.sample(quotes, 1)[0]
                 return redirect('/')
             else:
                 flash('비밀번호가 틀립니다.')       # 로그인 화면을 다시 보내줌
@@ -35,6 +44,7 @@ def login():
 def logout():
     session.pop('uid', None)       # 설정한 세션값을 삭제 
     session.pop('uname', None)
+    session.pop('profile', None)
     session.pop('year', None)
     session.pop('month', None)
     return redirect('/')
@@ -60,6 +70,9 @@ def register():
         udao.insert_user((uid, hashed_pwd, uname, email))
         session['uid'] = uid        # 세션값을 설정함으로써 사용자가 로그인하였음을 알게 해줌
         session['uname'] = uname
+        pdao.insert_profile(email)
+        profile = [email, None, None, None, None, None]
+        session['profile'] = profile
         return redirect('/')
 
 @user_bp.route('/list')

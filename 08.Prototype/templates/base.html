@@ -81,7 +81,7 @@
             <div class="col-3">
             {% if session['uid'] %}
                 {% if session['profile'][1] %}
-                    <img src="{{url_for('static', filename='data/' + session['profile'][0])}}" class="rounded-circle" width="90%">
+                    <img src="{{url_for('static', filename='profile/' + session['profile'][1])}}" class="rounded-circle" width="90%">
                 {% else %}
                     <img src="{{url_for('static', filename='data/profile.png')}}" class="rounded-circle" width="90%">
                 {% endif %}
@@ -106,7 +106,7 @@
                         <a href="javascript:changeWeather()"><span class="badge bg-secondary">날씨</span></a>
                         <div id="weather" class="ms-3"></div>
                     {% endif %}
-                    <button class="btn btn-sm btn-outline-primary mt-3">Edit Profile</button>
+                    <button class="btn btn-sm btn-outline-primary mt-3" onclick="getProfile()">Edit Profile</button>
                 </div>
             {% else %}
                 <img id="profile" src="https://picsum.photos/256/256" class="rounded-circle" width="90%">
@@ -136,6 +136,53 @@
             </script>
         {% endif %}
     {% endwith %}
+    <div class="modal" id="profileModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">프로파일 수정</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="email" id="hiddenEmail">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td style="width:25%"><label class="col-form-label">email</label></td>
+                                <td style="width:75%"><input type="text" id="modalEmail" class="form-control" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-form-label">사진 이미지</label></td>
+                                <td><input type="file" name="image" id="modalImage" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-form-label">상태 메세지</label></td>
+                                <td><input type="text" name="stateMsg" id="modalStateMsg" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-form-label">깃허브</label></td>
+                                <td><input type="text" name="github" id="modalGithub" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-form-label">인스타그램</label></td>
+                                <td><input type="text" name="insta" id="modalInsta" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-form-label">주소</label></td>
+                                <td><input type="text" name="addr" id="modalAddr" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <button class="btn btn-primary" onclick="changeProfile(); return false;">수정</button>
+                                    <button class="btn btn-secondary ms-1" data-bs-dismiss="modal">취소</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {% block additional_body %}{% endblock %}
 </body>
 </html>

@@ -4,10 +4,11 @@ from bp.map import map_bp
 from bp.user import user_bp
 from bp.chatbot import chatbot_bp
 from bp.schedule import schdedule_bp
-import os, random
+import os, json
 import util.map_util as mu
 import util.weather_util as wu
 import util.image_util as iu
+import db_sqlite.profile_dao as pdao
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'       # flash와 session을 사용하려면 반드시 설정해야 함
@@ -28,13 +29,25 @@ def weather():
     html = wu.get_weather(app.static_folder, lat, lng)
     return html
 
-@app.route('/change_profile', methods=['POST'])
+@app.route('/changeProfile', methods=['GET','POST'])
 def change_profile():
-    file_image = request.files['image']
-    filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
-    file_image.save(filename)
-    mtime = iu.change_profile(app.static_folder, filename)
-    return str(mtime)
+    if request.method == 'GET':
+        profile = pdao.get_profile(session['profile'][0])
+        return json.dumps(profile)
+    else:
+        email = request.form['email']
+        file_image = request.files['image']
+        image = file_image.filename
+        filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
+        file_image.save(filename)
+        mtime = iu.change_profile(app.static_folder, filename)
+        state_msg = request.form['stateMsg']
+        github = request.form['github']
+        insta = request.form['insta']
+        addr = request.form['addr']
+        params = [image, state_msg, github, insta, addr, email]
+        print(params)
+        return str(mtime)
 ###################################################
 
 @app.route('/')

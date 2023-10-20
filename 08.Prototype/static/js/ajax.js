@@ -12,23 +12,48 @@ function changeWeather() {
     });
 }
 
-function changeProfile() {
-    $('#imageInput').attr('class', 'mt-2');
+function getProfile() {
+    $('#profileModal').modal('show');
+    $.ajax({
+        type: 'GET',
+        url: '/changeProfile',
+        data: ' ',
+        success: function(result) {
+            let profile = JSON.parse(result);
+            $('#hiddenEmail').val(profile[0]);
+            $('#modalEmail').val(profile[0]);
+            $('#modalImage').val(profile[1]);
+            $('#modalStateMsg').val(profile[2]);
+            $('#modalGithub').val(profile[3]);
+            $('#modalInsta').val(profile[4]);
+            $('#modalAddr').val(profile[5]);
+        } 
+    })
 }
-function imageSubmit() {
-    let imageInputVal = $('#image')[0];
+
+function changeProfile() {
+    $('#profileModal').modal('hide');
+    let email = $('#hiddenEmail').val();
+    let imageInputVal = $('#modalImage')[0];
+    let stateMsg = $('#modalStateMsg').val();
+    let github = $('#modalGithub').val();
+    let insta = $('#modalInsta').val();
+    let addr = $('#modalAddr').val();
     let formData = new FormData();
+    formData.append('email', email);
     formData.append('image', imageInputVal.files[0]);
+    formData.append('stateMsg', stateMsg);
+    formData.append('github', github);
+    formData.append('insta', insta);
+    formData.append('addr', addr);
     $.ajax({
         type: 'POST',
-        url: '/change_profile',
+        url: '/changeProfile',
         data: formData,
         processData: false,
         contentType: false,
         success: function(result) {
-            $('#imageInput').attr('class', 'mt-2 d-none');
-            let fname = '/static/data/profile.png?q=' + result;
-            $('#profile').attr('src', fname);
+            
         }
     });
 }

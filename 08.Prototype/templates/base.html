@@ -81,12 +81,12 @@
             <div class="col-3">
             {% if session['uid'] %}
                 {% if session['profile'][1] %}
-                    <img src="{{url_for('static', filename='profile/' + session['profile'][1])}}" class="rounded-circle" width="90%">
+                    <img id="profileImage" src="{{url_for('static', filename='profile/' + session['uid'] + '.png')}}" class="rounded-circle" width="90%">
                 {% else %}
-                    <img src="{{url_for('static', filename='data/profile.png')}}" class="rounded-circle" width="90%">
+                    <img id="profileImage" src="{{url_for('static', filename='data/profile.png')}}" class="rounded-circle" width="90%">
                 {% endif %}
                 {% if session['profile'][2] %}
-                    <div class="mt-2">{{ session['profile'][2] }}</div>
+                    <div id="profileStateMsg" class="mt-2">{{ session['profile'][2] }}</div>
                 {% else %}
                     <div class="mt-2">{{ session['quote'] }}</div>
                 {% endif %}
@@ -94,15 +94,15 @@
                     <i class="fa fa-envelope me-2"></i>{{ session['profile'][0] }}<br>
                     {% if session['profile'][3] %}
                         <img src="{{url_for('static', filename='data/github.png')}}" height="16" class="me-1">
-                            <a href="https://github.com/{{ session['profile'][3] }}">{{ session['profile'][3] }}</a><br>
+                            <a id="profileGithub" href="https://github.com/{{ session['profile'][3] }}">{{ session['profile'][3] }}</a><br>
                     {% endif %}
                     {% if session['profile'][4] %}
                         <img src="{{url_for('static', filename='data/insta.png')}}" height="16" class="me-1">
-                            <a href="https://www.instagram.com/{{ session['profile'][4] }}">{{ session['profile'][4] }}</a><br>
+                            <a id="profileInsta" href="https://www.instagram.com/{{ session['profile'][4] }}">{{ session['profile'][4] }}</a><br>
                     {% endif %}
                     {% if session['profile'][5] %}
                         <img src="{{url_for('static', filename='data/addr.png')}}" height="16" class="me-1">
-                            <span id="addr">{{ session['profile'][5] }}</span>
+                            <span id="profileAddr">{{ session['profile'][5] }}</span>
                         <a href="javascript:changeWeather()"><span class="badge bg-secondary">날씨</span></a>
                         <div id="weather" class="ms-3"></div>
                     {% endif %}
@@ -146,6 +146,7 @@
                 <div class="modal-body">
                     <form method="post" enctype="multipart/form-data">
                         <input type="hidden" name="email" id="hiddenEmail">
+                        <input type="hidden" name="image" id="hiddenImage">
                         <table class="table table-borderless">
                             <tr>
                                 <td style="width:25%"><label class="col-form-label">email</label></td>

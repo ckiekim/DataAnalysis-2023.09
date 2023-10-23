@@ -1,7 +1,7 @@
 // AJAX(Asynchronous Javascript and XML)
 // Web page의 일부분만 변경하는 방법
 function changeWeather() {
-    let addr = $('#addr').text();
+    let addr = $('#profileAddr').text();
     $.ajax({
         type: 'GET',
         url: '/weather',
@@ -22,7 +22,7 @@ function getProfile() {
             let profile = JSON.parse(result);
             $('#hiddenEmail').val(profile[0]);
             $('#modalEmail').val(profile[0]);
-            $('#modalImage').val(profile[1]);
+            $('#hiddenImage').val(profile[1]);
             $('#modalStateMsg').val(profile[2]);
             $('#modalGithub').val(profile[3]);
             $('#modalInsta').val(profile[4]);
@@ -52,8 +52,14 @@ function changeProfile() {
         data: formData,
         processData: false,
         contentType: false,
-        success: function(result) {
-            
+        success: function(result) {     
+            let profile = JSON.parse(result);
+            let filename = '/static/profile/' + profile[6] + '.png?q=' + profile[7];
+            $('#profileImage').attr({'src': filename});
+            $('#profileStateMsg').text(profile[2]);
+            $('#profileGithub').text(profile[3]);
+            $('#profileInsta').text(profile[4]);
+            $('#profileAddr').text(profile[5]);
         }
     });
 }

@@ -37,17 +37,22 @@ def change_profile():
     else:
         email = request.form['email']
         file_image = request.files['image']
-        image = file_image.filename
-        filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
-        file_image.save(filename)
-        mtime = iu.change_profile(app.static_folder, filename)
+        if file_image:
+            image = file_image.filename
+            filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
+            file_image.save(filename)
+            mtime = iu.change_profile(app.static_folder, filename, session['uid'])
         state_msg = request.form['stateMsg']
         github = request.form['github']
         insta = request.form['insta']
         addr = request.form['addr']
         params = [image, state_msg, github, insta, addr, email]
-        print(params)
-        return str(mtime)
+        pdao.update_profile(params)
+        profile = [email, image, state_msg, github, insta, addr]
+        session['profile'] = profile
+        profile.append(session['uid'])
+        profile.append(int(mtime))
+        return json.dumps(profile)
 ###################################################
 
 @app.route('/')

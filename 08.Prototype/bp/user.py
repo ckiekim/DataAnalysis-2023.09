@@ -107,5 +107,6 @@ def update():
     
 @user_bp.route('/delete')
 def delete_modal():
+    pdao.delete_profile(session['profile'][0])
     udao.delete_user(session['uid'])
     return redirect('/user/logout')

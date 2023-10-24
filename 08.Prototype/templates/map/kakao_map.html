@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}"></script>
+    <script>
+        function send() {
+            let level = $('#level').val();
+            let lat = $('#lat').val();
+            let lng = $('#lng').val();
+            $.ajax({
+                type: 'POST',
+                url: '/map/kakaoMap',
+                data: {level, lat, lng},
+                success: function(result) {
+                    let list = JSON.parse(result);
+                    let container = document.getElementById('map');
+                    let options = {
+                        center: new kakao.maps.LatLng(list[1], list[2]), level: list[0]
+                    };
+                    let map = new kakao.maps.Map(container, options);
+                }
+            });
+        }
+        function init() {
+            $('#level').val('');
+            $('#lat').val('');
+            $('#lng').val('');
+        }
+    </script>
+{% endblock %}
+{% block subtitle %}카카오 맵{% endblock %}
+{% block content %}
+    <table class="table table-borderless">
+        <tr>
+            <td style="width: 20%;">
+                <input type="text" class="form-control" id="level" placeholder="3 (레벨)">
+            </td>
+            <td style="width: 30%;">
+                <input type="text" class="form-control" id="lat" placeholder="위도">
+            </td>
+            <td style="width: 30%;">
+                <input type="text" class="form-control" id="lng" placeholder="경도">
+            </td>
+            <td style="width: 20%;">
+                <button class="btn btn-primary" onclick="send()">확인</button>
+                <button class="btn btn-secondary" onclick="init()">취소</button>
+            </td>
+        </tr>
+    </table>
+    <div id="map" style="width:800px;height:500px;"></div>
+{% endblock %}

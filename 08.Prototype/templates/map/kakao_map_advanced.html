@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}&libraries=services,clusterer,drawing"></script>
+    <script>
+        function send() {
+            let kind = $("input[name='kind']:checked").val();
+            let name = $('#name').val();
+            let lat = $('#lat').val();
+            let lng = $('#lng').val();
+            $.ajax({
+                type: 'POST',
+                url: '/map/kakaoMap',
+                data: {kind, name, lat, lng},
+                success: function(result) {
+                    $("input[name='kind'][value='map']").prop('checked', true)
+                    $('#name').val('');
+                    $('#lat').val('');
+                    $('#lng').val('');
+                    let list = JSON.parse(result);
+                    let container = document.getElementById('map');
+                    let options = {
+                        center: new kakao.maps.LatLng(list[2], list[3]), level: 3
+                    };
+                    let map = new kakao.maps.Map(container, options);
+                }
+            });
+        }
+    </script>
+{% endblock %}
+{% block subtitle %}카카오 맵{% endblock %}
+{% block content %}
+    <table class="table table-borderless">
+        <tr>
+            <td style="width: 31%;">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="kind" value="map" checked> 지도
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="kind" value="to"> 길찾기
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="kind" value="roadview"> 로드뷰
+                    </label>
+                </div>
+            </td>
+            <td style="width: 20%;">
+                <input type="text" class="form-control" id="name" placeholder="이름">
+            </td>
+            <td style="width: 20%;">
+                <input type="text" class="form-control" id="lat" placeholder="위도">
+            </td>
+            <td style="width: 20%;">
+                <input type="text" class="form-control" id="lng" placeholder="경도">
+            </td>
+            <td style="width: 9%;">
+                <button class="btn btn-primary" type="submit" onclick="send()">확인</button>
+            </td>
+        </tr>
+    </table>
+    <div id="map" style="width:800px;height:500px;"></div>
+{% endblock %}

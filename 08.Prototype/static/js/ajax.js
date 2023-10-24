@@ -39,6 +39,7 @@ function changeProfile() {
     let github = $('#modalGithub').val();
     let insta = $('#modalInsta').val();
     let addr = $('#modalAddr').val();
+    let hiddenImage = $('#hiddenImage').val();
     let formData = new FormData();
     formData.append('email', email);
     formData.append('image', imageInputVal.files[0]);
@@ -46,6 +47,7 @@ function changeProfile() {
     formData.append('github', github);
     formData.append('insta', insta);
     formData.append('addr', addr);
+    formData.append('hiddenImage', hiddenImage);
     $.ajax({
         type: 'POST',
         url: '/changeProfile',
@@ -54,12 +56,17 @@ function changeProfile() {
         contentType: false,
         success: function(result) {     
             let profile = JSON.parse(result);
-            let filename = '/static/profile/' + profile[6] + '.png?q=' + profile[7];
+            let filename = '/static/profile/' + profile[6] + '.png';
+            if (profile[7] != 0)    // profile image가 변화하면 mtime 값이 바뀜
+                filename += '?q=' + profile[7];
             $('#profileImage').attr({'src': filename});
             $('#profileStateMsg').text(profile[2]);
             $('#profileGithub').text(profile[3]);
             $('#profileInsta').text(profile[4]);
             $('#profileAddr').text(profile[5]);
+            let needRefresh = profile[8];
+            if (needRefresh == 1)   // github, insta, addr이 새로이 생성되면 needRefresh가 1이 됨
+                window.location.reload();
         }
     });
 }

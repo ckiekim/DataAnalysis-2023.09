@@ -36,22 +36,28 @@ def change_profile():
         return json.dumps(profile)
     else:
         email = request.form['email']
-        file_image = request.files['image']
-        if file_image:
+        try:
+            file_image = request.files['image']
             image = file_image.filename
             filename = os.path.join(app.static_folder, f'upload/{file_image.filename}')
             file_image.save(filename)
             mtime = iu.change_profile(app.static_folder, filename, session['uid'])
+        except:
+            image = request.form['hiddenImage']     # image의 변화가 없으면 hiddenImage값을 사용
+            mtime = 0
         state_msg = request.form['stateMsg']
         github = request.form['github']
         insta = request.form['insta']
         addr = request.form['addr']
         params = [image, state_msg, github, insta, addr, email]
         pdao.update_profile(params)
+        # github, insta, addr 값이 추가되면 need_refresh 값을 1로 세팅 --> 윈도우 Reload 하게 함
+        need_refresh = 0 if session['profile'][3] and session['profile'][4] and session['profile'][5] else 1
         profile = [email, image, state_msg, github, insta, addr]
         session['profile'] = profile
         profile.append(session['uid'])
-        profile.append(int(mtime))
+        profile.append(mtime)
+        profile.append(need_refresh)
         return json.dumps(profile)
 ###################################################
 

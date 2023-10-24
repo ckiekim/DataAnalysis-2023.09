@@ -16,4 +16,4 @@ def change_profile(static_folder, filename, uid):
     img = Image.open(filename)
     new_fname = os.path.join(static_folder, 'profile/' + uid + '.png')
     center_image(img).save(new_fname, format='png')
-    return os.stat(new_fname).st_mtime      # 마지막으로 파일이 수정된 시각(int type)
+    return int(os.stat(new_fname).st_mtime)     # 마지막으로 파일이 수정된 시각(int type으로 반환)

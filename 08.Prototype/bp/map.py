@@ -29,17 +29,11 @@ def cctv_pop():
         mu.get_cctv_pop(current_app.static_folder, column, colormap)    # static/img/cctv_pop.html 파일
         return render_template('map/cctv_pop_res.html', column=column, colormap=colormap, menu=menu)
     
-@map_bp.route('/kakaoMap', methods=['GET','POST'])
+@map_bp.route('/kakaoMap')
 def kakao_map():
-    if request.method == 'GET':
-        with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:
-            kakao_map_api_key = f.read()
-        return render_template('map/kakao_map.html', menu=menu, key=kakao_map_api_key)
-    else:
-        level = request.form['level']
-        lat = request.form['lat']
-        lng = request.form['lng']
-        return json.dumps([level, lat, lng])
+    with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:
+        kakao_map_api_key = f.read()
+    return render_template('map/kakao_map.html', menu=menu, key=kakao_map_api_key)
 
 @map_bp.route('/kakaoMapAdvanced', methods=['GET','POST'])
 def kakao_map_advanced():

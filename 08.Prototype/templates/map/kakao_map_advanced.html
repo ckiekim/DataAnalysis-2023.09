@@ -3,36 +3,31 @@
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}&libraries=services,clusterer,drawing"></script>
     <script>
-        function send() {
+        function show() {
             let kind = $("input[name='kind']:checked").val();
             let name = $('#name').val();
             let lat = $('#lat').val();
             let lng = $('#lng').val();
-            $.ajax({
-                type: 'POST',
-                url: '/map/kakaoMap',
-                data: {kind, name, lat, lng},
-                success: function(result) {
-                    $("input[name='kind'][value='map']").prop('checked', true)
-                    $('#name').val('');
-                    $('#lat').val('');
-                    $('#lng').val('');
-                    let list = JSON.parse(result);
-                    let container = document.getElementById('map');
-                    let options = {
-                        center: new kakao.maps.LatLng(list[2], list[3]), level: 3
-                    };
-                    let map = new kakao.maps.Map(container, options);
-                }
-            });
+            
+            let url = 'https://map.kakao.com/link/' + kind + '/';
+            if (name && kind != 'roadview') 
+                url += name + ',';
+            url += lat + ',' + lng;
+            $('#map').attr({ src: url, border: 1 })
+        }
+        function init() {
+            $("input[name='kind'][value='map']").prop('checked', true)
+            $('#name').val('');
+            $('#lat').val('');
+            $('#lng').val('');
         }
     </script>
 {% endblock %}
-{% block subtitle %}카카오 맵{% endblock %}
+{% block subtitle %}카카오 맵(고급){% endblock %}
 {% block content %}
     <table class="table table-borderless">
         <tr>
-            <td style="width: 31%;">
+            <td style="width: 32%;">
                 <div class="form-check-inline">
                     <label class="form-check-label">
                         <input type="radio" class="form-check-input" name="kind" value="map" checked> 지도
@@ -49,21 +44,20 @@
                     </label>
                 </div>
             </td>
-            <td style="width: 20%;">
+            <td style="width: 16%;">
                 <input type="text" class="form-control" id="name" placeholder="이름">
             </td>
-            <td style="width: 20%;">
+            <td style="width: 16%;">
                 <input type="text" class="form-control" id="lat" placeholder="위도">
             </td>
-            <td style="width: 20%;">
+            <td style="width: 16%;">
                 <input type="text" class="form-control" id="lng" placeholder="경도">
             </td>
-            <td style="width: 9%;">
-                <button class="btn btn-primary" type="submit" onclick="send()">확인</button>
+            <td style="width: 20%;">
+                <button class="btn btn-primary" onclick="show()">확인</button>
+                <button class="btn btn-secondary" onclick="init()">취소</button>
             </td>
         </tr>
     </table>
-    <iframe src="{{url_for('static', filename='img/station_map.html')}}" frameborder="1"
-        width="800" height="500"></iframe>
-    <div id="map" style="width:800px;height:500px;"></div>
+    <iframe id="map" width="800" height="500"></iframe>
 {% endblock %}

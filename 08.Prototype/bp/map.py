@@ -35,16 +35,8 @@ def kakao_map():
         kakao_map_api_key = f.read()
     return render_template('map/kakao_map.html', menu=menu, key=kakao_map_api_key)
 
-@map_bp.route('/kakaoMapAdvanced', methods=['GET','POST'])
+@map_bp.route('/kakaoMapAdvanced')
 def kakao_map_advanced():
-    if request.method == 'GET':
-        with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:
-            kakao_map_api_key = f.read()
-        return render_template('map/kakao_map_advanced.html', menu=menu, key=kakao_map_api_key)
-    else:
-        kind = request.form['kind']
-        name = request.form['name']
-        lat = request.form['lat']
-        lng = request.form['lng']
-        print(kind, name, lat, lng)
-        return json.dumps([kind, name, lat, lng])
+    with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:
+        kakao_map_api_key = f.read()
+    return render_template('map/kakao_map_advanced.html', menu=menu, key=kakao_map_api_key)

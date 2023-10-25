@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{key}}"></script>
+    <script>
+        function mean(arr) {
+            let sum = 0.0;
+            for (i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            return sum / arr.length;
+        }
+        function showModal() {
+            let level = $('#level').val();
+            let count = parseInt($('#count').val());
+            $('#hiddenLevel').val(level);
+            $('#hiddenCount').val(count);
+            for (let i = count; i > 0; i--) {
+                $('<tr></tr>').attr({id: 'mark_tr'+i}).prependTo('#table');
+                $('<td></td>').attr({id: 'mark_td'+i+'1'}).appendTo('#mark_tr'+i);
+                $('<input></input>')
+                    .attr({type:'text', id:'name'+i, 'class':'form-control', placeholder:'지명'})
+                    .appendTo('#mark_td'+i+'1');
+                $('<td></td>').attr({id: 'mark_td'+i+'2'}).appendTo('#mark_tr'+i);
+                $('<input></input>')
+                    .attr({type:'text', id:'lat'+i, 'class':'form-control', placeholder:'위도'})
+                    .appendTo('#mark_td'+i+'2');
+                $('<td></td>').attr({id: 'mark_td'+i+'3'}).appendTo('#mark_tr'+i);
+                $('<input></input>')
+                    .attr({type:'text', id:'lng'+i, 'class':'form-control', placeholder:'경도'})
+                    .appendTo('#mark_td'+i+'3');    
+            }
+            $('#insertModal').modal('show');
+        }
+        function show() {
+            $('#insertModal').modal('hide');
+            let level = parseInt($('#hiddenLevel').val());
+            let count = parseInt($('#hiddenCount').val());
+            let positions = [], lats = [], lngs = [];
+            for (let i = 1; i <= count; i++) {
+                let name = $('#name'+i).val();
+                let lat = $('#lat'+i).val();
+                let lng = $('#lng'+i).val();
+                positions.push({
+                    content: '<div>' + name + '</div>',
+                    latlng: new kakao.maps.LatLng(lat, lng)
+                });
+                lats.push(parseFloat(lat));
+                lngs.push(parseFloat(lng));
+                //$('#result').text('name='+name+', lat='+lat+', lng='+lng);
+            }
+            for (let i = 1; i <= count; i++)
+                $('#mark_tr'+i).remove();
+            let center_lat = mean(lats);
+            let center_lng = mean(lngs);
+            //$('#result').text('lat='+center_lat+', lng='+center_lng);
+
+            let container = document.getElementById('map');
+            let options = {
+                center: new kakao.maps.LatLng(center_lat, center_lng), level: level
+            };
+            let map = new kakao.maps.Map(container, options);
+            
+            for (let i = 0; i < positions.length; i++) {
+                var marker = new kakao.maps.Marker({
+                    map: map,                           // 마커를 표시할 지도
+                    position: positions[i].latlng       // 마커 위치
+                });
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: positions[i].content       // 인포윈도우에 표시할 내용
+                });
+                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow))
+            }
+        }
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        }
+
+        function init() {
+            $('#level').val('');
+            $('#count').val('');
+        }
+    </script>
+{% endblock %}
+{% block subtitle %}카카오 맵(마커 여러개){% endblock %}
+{% block content %}
+    <table class="table table-borderless">
+        <tr>
+            <td style="width: 12%;"></td>
+            <td style="width: 15%; text-align: right;">
+                <label class="col-form-label">지도 레벨 :</label>
+            </td>
+            <td style="width: 10%;">
+                <input type="text" class="form-control" id="level" value="5">
+            </td>
+            <td style="width: 15%; text-align: right;">
+                <label class="col-form-label">마커 갯수 :</label>
+            </td>
+            <td style="width: 10%;">
+                <input type="text" class="form-control" id="count" value="3">
+            </td>
+            <td style="width: 20%; text-align: right;">
+                <button class="btn btn-primary" onclick="showModal()">마커 입력</button>
+                <button class="btn btn-secondary" onclick="init()">취소</button>
+            </td>
+            <td style="width: 18%;"></td>
+        </tr>
+    </table>
+    <div id="result"></div>
+    <div id="map" style="width:800px; height:500px; border: 1px;"></div>
+{% endblock %}
+{% block additional_body %}
+    <div class="modal" id="insertModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">마커 입력</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hiddenLevel">
+                    <input type="hidden" id="hiddenCount">
+                    <table class="table table-borderless" id="table">
+                        <tr>
+                            <td colspan="3" style="text-align: center;">
+                                <button class="btn btn-primary" onclick="show()">확인</button>
+                                <button class="btn btn-secondary ms-1" data-bs-dismiss="modal">취소</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

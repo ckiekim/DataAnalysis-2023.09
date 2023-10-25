@@ -35,6 +35,12 @@ def kakao_map():
         kakao_map_api_key = f.read()
     return render_template('map/kakao_map.html', menu=menu, key=kakao_map_api_key)
 
+@map_bp.route('/kakaoMapMarker')
+def kakao_map_marker():
+    with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:
+        kakao_map_api_key = f.read()
+    return render_template('map/kakao_map_marker.html', menu=menu, key=kakao_map_api_key)
+
 @map_bp.route('/kakaoMapAdvanced')
 def kakao_map_advanced():
     with open(os.path.join(current_app.static_folder, 'keys/카카오맵jsApiKey.txt')) as f:

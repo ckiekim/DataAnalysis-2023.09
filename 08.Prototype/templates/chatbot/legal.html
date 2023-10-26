@@ -20,23 +20,24 @@
 							.attr({'class': 'd-flex flex-row mt-1', id: mark+'1'})
 							.prependTo('#container');
 						$('<div></div>')
-							.attr({'class': 'card', id: mark+'2'}).appendTo('#'+mark+'1');
+							.attr({'class': 'card w-100', id: mark+'2'}).appendTo('#'+mark+'1');
 						$('<div></div>')
 							.attr({'class': 'card-body', id: mark+'3'}).appendTo('#'+mark+'2');
                         $('<img></img>')
 							.attr({src: "{{url_for('static', filename='img/person.png')}}", height: '32'}).appendTo('#'+mark+'3');
                         $('<span></span>')
-                            .html(' '+obj.user+'<br><br>').appendTo('#'+mark+'3');
+                            .html(' ' + obj.user + '<br><br>').appendTo('#'+mark+'3');
                         $('<img></img>')
                             .attr({src: "{{url_for('static', filename='img/gov-logo.png')}}", height: '32'}).appendTo('#'+mark+'3');
                         if (obj.result == 0) {                    
                             $('<span></span>')
-                                .html(' '+obj.answer).appendTo('#'+mark+'3');
+                                .html(' ' + obj.answer).appendTo('#'+mark+'3');
                         } else {
                             $('<span></span>')
-                                .html(' '+obj.answer.replaceAll('\n','<br>')+'<br>'+
-                                      '근거: '+obj.source.replaceAll('\n','<br>')+'<br>'+
-                                      '내용: '+obj.clause.replaceAll('\n','<br>')).appendTo('#'+mark+'3');
+                                .html(' ' + obj.answer.replaceAll('\n','<br>') + '<br>' +
+                                      '근거: ' + obj.source.replaceAll('\n','<br>') + '<br>' +
+                                      '내용: ' + obj.clause.replaceAll('\n','<br>'))
+                                .appendTo('#'+mark+'3');
                         }
                 }
             });

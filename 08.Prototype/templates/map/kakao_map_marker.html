@@ -14,11 +14,11 @@
             let count = parseInt($('#count').val());
             $('#hiddenLevel').val(level);
             $('#hiddenCount').val(count);
-            for (let i = count; i > 0; i--) {
+            for (let i = count; i > 0; i--) {   // count 갯수만큼 입력 라인 만들어 주기
                 $('<tr></tr>').attr({id: 'mark_tr'+i}).prependTo('#table');
                 $('<td></td>').attr({id: 'mark_td'+i+'1'}).appendTo('#mark_tr'+i);
                 $('<input></input>')
-                    .attr({type:'text', id:'name'+i, 'class':'form-control', placeholder:'지명'})
+                    .attr({type:'text', id:'name'+i, 'class':'form-control', placeholder:'명칭'})
                     .appendTo('#mark_td'+i+'1');
                 $('<td></td>').attr({id: 'mark_td'+i+'2'}).appendTo('#mark_tr'+i);
                 $('<input></input>')
@@ -31,12 +31,12 @@
             }
             $('#insertModal').modal('show');
         }
-        function show() {
+        function showMap() {
             $('#insertModal').modal('hide');
             let level = parseInt($('#hiddenLevel').val());
             let count = parseInt($('#hiddenCount').val());
             let positions = [], lats = [], lngs = [];
-            for (let i = 1; i <= count; i++) {
+            for (let i = 1; i <= count; i++) {      // count 갯수만큼 입력값 읽기
                 let name = $('#name'+i).val();
                 let lat = $('#lat'+i).val();
                 let lng = $('#lng'+i).val();
@@ -46,13 +46,13 @@
                 });
                 lats.push(parseFloat(lat));
                 lngs.push(parseFloat(lng));
-                //$('#result').text('name='+name+', lat='+lat+', lng='+lng);
+                // $('#result').text('name='+name+', lat='+lat+', lng='+lng);
             }
-            for (let i = 1; i <= count; i++)
+            for (let i = 1; i <= count; i++)        // 입력 폼 없애기
                 $('#mark_tr'+i).remove();
             let center_lat = mean(lats);
             let center_lng = mean(lngs);
-            //$('#result').text('lat='+center_lat+', lng='+center_lng);
+            // $('#result').text('lat='+center_lat+', lng='+center_lng);
 
             let container = document.getElementById('map');
             let options = {
@@ -68,20 +68,20 @@
                 var infowindow = new kakao.maps.InfoWindow({
                     content: positions[i].content       // 인포윈도우에 표시할 내용
                 });
-                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-                // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+                // 이벤트 리스너로는 클로저를 만들어 등록
                 kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow))
             }
         }
-        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        // 인포윈도우를 표시하는 클로저를 만드는 함수
         function makeOverListener(map, marker, infowindow) {
             return function() {
                 infowindow.open(map, marker);
             };
         }
 
-        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        // 인포윈도우를 닫는 클로저를 만드는 함수
         function makeOutListener(infowindow) {
             return function() {
                 infowindow.close();
@@ -135,7 +135,7 @@
                     <table class="table table-borderless" id="table">
                         <tr>
                             <td colspan="3" style="text-align: center;">
-                                <button class="btn btn-primary" onclick="show()">확인</button>
+                                <button class="btn btn-primary" onclick="showMap()">확인</button>
                                 <button class="btn btn-secondary ms-1" data-bs-dismiss="modal">취소</button>
                             </td>
                         </tr>

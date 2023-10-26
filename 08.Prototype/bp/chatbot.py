@@ -4,6 +4,7 @@ import bardapi, openai
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+import util.chatbot_util as cu
 
 chatbot_bp = Blueprint('chatbot_bp', __name__)
 
@@ -31,6 +32,16 @@ def counsel():
             'category':answer.구분, 'user':user_input, 'chatbot':answer.챗봇, 'similarity':answer.유사도
         }
         return json.dumps(result)
+
+@chatbot_bp.route('/legal', methods=['GET','POST'])
+def legal():
+    if request.method == 'GET':
+        return render_template('chatbot/legal.html', menu=menu)
+    else:
+        user_input = request.form['userInput']
+        res_dict = cu.get_legal_answer(current_app.static_folder, user_input)
+        res_dict['user'] = user_input
+        return json.dumps(res_dict)
 
 @chatbot_bp.route('/bard', methods=['GET','POST'])
 def bard():

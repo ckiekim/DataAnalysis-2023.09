@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}구글 OCR{% endblock %}
+{% block additional_head %} 
+    <script>
+        function send() {
+            let imageInputVal = $('#image')[0];
+            let formData = new FormData();
+            formData.append('image', imageInputVal.files[0]);
+            $('#result_text').text('');
+            $('#img').attr({src: "{{url_for('static', filename='img/please-wait.gif')}}"});
+            $.ajax({
+                type: 'POST',
+                url: '/chatbot/ocr',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(result) {
+                    $('#waitImg').remove();
+                    $('#result_row').attr({'class': 'visible'});
+                    result = JSON.parse(result);
+                    $('#result_text').text(result.text);
+                    let url = "{{url_for('static', filename='img/ocr-result.png')}}" + '?q=' + result.mtime;
+                    console.log(url);
+                    $('#img').attr({src: url});
+                }
+            });
+        }
+    </script>
+{% endblock %}
+{% block subtitle %}OCR - 구글 API{% endblock %}
+{% block content %}
+    <table class="table table-borderless">
+        <tr>
+            <td style="width:15%"><label class="col-form-label">인식할 파일</label></td>
+            <td style="width:70%"><input type="file" id="image" class="form-control"></td>
+            <td style="width:15%; text-align:center">
+                <button class="btn btn-primary me-2" onclick="send()">업로드</button>
+            </td>
+        </tr>
+        <tr id="result_row" class="invisible">
+            <td>인식한 텍스트</td>
+            <td id="result_text" colspan="2"></td>
+        </tr>
+    </table>
+    <div id="result"></div>
+    <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+        <img id="img" src="{{url_for('static', filename='img/google-cloud-vision-API.jpg')}}" style="width: 80%">
+   </div>
+{% endblock %}

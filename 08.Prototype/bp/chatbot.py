@@ -79,4 +79,17 @@ def gen_img():
         )
         img_url = dalle_response['data'][0]['url']
         result = {'img_url':img_url, 'translated_text': prompt}
-        return json.dumps(result) 
+        return json.dumps(result)
+    
+@chatbot_bp.route('/ocr', methods=['GET','POST'])
+def ocr():
+    if request.method == 'GET':
+        return render_template('chatbot/ocr.html', menu=menu)
+    else:
+        file_image = request.files['image']
+        filename = os.path.join(current_app.static_folder, f'upload/{file_image.filename}')
+        file_image.save(filename)
+
+        text, mtime = cu.proc_ocr(current_app.static_folder, filename)
+        result = {'text':text, 'mtime':mtime}
+        return json.dumps(result)

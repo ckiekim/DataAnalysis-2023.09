@@ -2,6 +2,9 @@
 {% block title %}Bard API{% endblock %}
 {% block additional_head %} 
     <script>
+        $(document).ready(function() {
+            $('#userInput').focus();
+        });
         function send() {
             let userInput = $('#userInput').val();
             $('<img></img>')
@@ -49,5 +52,5 @@
     <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
         <div class="container overflow-auto" id="container" style="width: 80%; height: 600px;">
         </div>
-   </div>
+    </div>
 {% endblock %}

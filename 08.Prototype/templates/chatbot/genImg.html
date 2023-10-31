@@ -2,6 +2,9 @@
 {% block title %}OpenAI API{% endblock %}
 {% block additional_head %} 
     <script>
+        $(document).ready(function() {
+            $('#userInput').focus();
+        });
         function send() {
             let userInput = $('#userInput').val();
             let size = $("input[name='size']:checked").val();
@@ -53,5 +56,5 @@
             <img id="generated_image">
             <div id="translated_text" class="mt-3"></div>
         </div>
-   </div>
+    </div>
 {% endblock %}

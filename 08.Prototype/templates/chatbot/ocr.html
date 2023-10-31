@@ -3,8 +3,14 @@
 {% block additional_head %} 
     <script>
         function send() {
+            let color = $("input[name='color']:checked").val();
+            let showText = $("input[name='showText']:checked").val();
+            let size = $('#size').val();
             let imageInputVal = $('#image')[0];
             let formData = new FormData();
+            formData.append('color', color);
+            formData.append('showText', showText);
+            formData.append('size', size);
             formData.append('image', imageInputVal.files[0]);
             $('#result_text').text('');
             $('#img').attr({src: "{{url_for('static', filename='img/please-wait.gif')}}"});
@@ -25,6 +31,9 @@
                 }
             });
         }
+        function option() {
+            $('#optionModal').modal('show');
+        }
     </script>
 {% endblock %}
 {% block subtitle %}OCR - 구글 API{% endblock %}
@@ -32,9 +41,10 @@
     <table class="table table-borderless">
         <tr>
             <td style="width:15%"><label class="col-form-label">인식할 파일</label></td>
-            <td style="width:70%"><input type="file" id="image" class="form-control"></td>
-            <td style="width:15%; text-align:center">
-                <button class="btn btn-primary me-2" onclick="send()">업로드</button>
+            <td style="width:60%"><input type="file" id="image" class="form-control"></td>
+            <td style="width:25%; text-align:center">
+                <button class="btn btn-primary me-1" onclick="send()">업로드</button>
+                <button class="btn btn-secondary me-2" onclick="option()">옵션</button>
             </td>
         </tr>
         <tr id="result_row" class="invisible">
@@ -46,4 +56,64 @@
     <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
         <img id="img" src="{{url_for('static', filename='img/google-cloud-vision-API.jpg')}}" style="width: 80%">
    </div>
+{% endblock %}
+{% block additional_body %}
+    <div class="modal" id="optionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">옵션 선택</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless" id="table">
+                        <tr>
+                            <td style="width: 20%;"><label class="col-form-label">박스 컬러</label></td>
+                            <td style="width: 80%; text-align: center;">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="color" value="red" checked> 빨강
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="color" value="green"> 초록
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="color" value="blue"> 파랑
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="col-form-label">글자 표시</label></td>
+                            <td style="text-align: center;">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="showText" value="yes" checked> 표시
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="showText" value="no"> 표시안함
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="col-form-label">글자 크기</label></td>
+                            <td><input class="form-control" type="text" id="size" value="16"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">
+                                <button class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

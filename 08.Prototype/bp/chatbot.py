@@ -86,10 +86,13 @@ def ocr():
     if request.method == 'GET':
         return render_template('chatbot/ocr.html', menu=menu)
     else:
+        color = request.form['color']
+        showText = request.form['showText']
+        size = request.form['size']
         file_image = request.files['image']
         filename = os.path.join(current_app.static_folder, f'upload/{file_image.filename}')
         file_image.save(filename)
 
-        text, mtime = cu.proc_ocr(current_app.static_folder, filename)
+        text, mtime = cu.proc_ocr(current_app.static_folder, filename, color, showText, size)
         result = {'text':text, 'mtime':mtime}
         return json.dumps(result)

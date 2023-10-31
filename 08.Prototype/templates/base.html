@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container-fluid">
             <ul class="navbar-nav">
-                <a class="navbar-brand mx-5" href="#"><img src="{{url_for('static', filename='data/ck-logo.png')}}" height="36"></a>
+                <a class="navbar-brand mx-5" href="#"><img src="{{url_for('static', filename='img/ck-logo.png')}}" height="36"></a>
                 <li class="nav-item ms-3">
                     <a class="nav-link {% if menu.ho %}active{% endif %}" href="{% if menu.ho %}#{% else %}/{% endif %}"><i class="fas fa-home"></i> Home</a>
                 </li>
@@ -35,7 +35,6 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/crawling/interpark">인터파크</a></li>
                         <li><a class="dropdown-item" href="/crawling/melon">멜론차트</a></li>
-                        <li><a class="dropdown-item" href="/crawling/siksin">식신</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown ms-3">
@@ -91,12 +90,12 @@
                 {% if session['profile'][1] %}
                     <img id="profileImage" src="{{url_for('static', filename='profile/' + session['uid'] + '.png')}}" class="rounded-circle" width="90%">
                 {% else %}
-                    <img id="profileImage" src="{{url_for('static', filename='data/profile.png')}}" class="rounded-circle" width="90%">
+                    <img id="profileImage" src="{{url_for('static', filename='img/profile.png')}}" class="rounded-circle" width="90%">
                 {% endif %}
                 {% if session['profile'][2] %}
                     <div id="profileStateMsg" class="mt-2">{{ session['profile'][2] }}</div>
                 {% else %}
-                    <div id="profileStateMsg" class="mt-2">{{ session['quote'] }}</div>
+                    <div id="profileStateMsg" class="mt-2">상태 메세지를 적으세요.</div>
                 {% endif %}
                 <div class="mt-3">
                     <i class="fa fa-envelope me-2"></i>{{ session['profile'][0] }}<br>

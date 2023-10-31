@@ -47,7 +47,7 @@ def proc_ocr(static_folder, filename, color, showText, size):
             draw.text((x1+10, y1-20), text.description, 
                       font=ImageFont.truetype('malgun.ttf',size), fill=color)
     
-    savefile = os.path.join(static_folder, 'img/ocr-result.png')
+    savefile = os.path.join(static_folder, 'result/ocr-result.png')
     plt.imshow(img)
     plt.axis('off')
     plt.savefig(savefile, format='png')

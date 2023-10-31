@@ -3,10 +3,10 @@ import numpy as np
 import pandas as pd
 from urllib.parse import quote
 
-def get_station_map(root_path, stations):
+def get_station_map(static_path, stations):
     # 도로명 주소 구하기
     # filename = '../04.지도시각화/keys/도로명주소apiKey.txt'
-    filename = os.path.join(root_path, 'static/keys/도로명주소apiKey.txt')
+    filename = os.path.join(static_path, 'keys/도로명주소apiKey.txt')
     with open(filename) as file:
         road_key = file.read()
 
@@ -25,7 +25,7 @@ def get_station_map(root_path, stations):
     df = pd.DataFrame({'이름': stations, '주소': road_addr_list})
 
     # 위도, 경도 좌표 구하기
-    filename = os.path.join(root_path, 'static/keys/카카오apiKey.txt')
+    filename = os.path.join(static_path, 'keys/카카오apiKey.txt')
     with open(filename) as file:
         kakao_key = file.read()
     base_url = 'https://dapi.kakao.com/v2/local/search/address.json'
@@ -48,7 +48,7 @@ def get_station_map(root_path, stations):
             tooltip=df.이름[i],
             popup=folium.Popup(df.주소[i], max_width=200)
         ).add_to(map)   
-    filename = os.path.join(root_path, 'static/img/station_map.html')
+    filename = os.path.join(static_path, 'result/station_map.html')
     map.save(filename)
 
 def get_text_location(geo_str):
@@ -60,9 +60,10 @@ def get_text_location(geo_str):
     return gu_dict
 
 def get_cctv(static_path):
-    filename = f'{static_path}/data/서울시 구별 CCTV 인구 현황.csv'
+    filename = os.path.join(static_path, 'data/서울시 구별 CCTV 인구 현황.csv')
     df = pd.read_csv(filename, index_col='구별')
-    geo_data = json.load(open(f'{static_path}/data/seoul_geo_simple.json', encoding='utf-8'))
+    geo_file = os.path.join(static_path, 'data/seoul_geo_simple.json')
+    geo_data = json.load(open(geo_file, encoding='utf-8'))
 
     map = folium.Map([37.55, 126.98], zoom_start=11, tiles='Stamen Toner')
     folium.Choropleth(
@@ -79,12 +80,14 @@ def get_cctv(static_path):
             icon = folium.DivIcon(icon_size=(80,20), icon_anchor=(20,0),
                         html=f'<span style="font-size: 10pt">{gu_name}</span>')
     ).add_to(map)
-    map.save(f'{static_path}/img/cctv.html')
+    filename = os.path.join(static_path, 'result/cctv.html')
+    map.save(filename)
 
 def get_cctv_pop(static_path, column, colormap):
-    filename = f'{static_path}/data/서울시 구별 CCTV 인구 현황.csv'
+    filename = os.path.join(static_path, 'data/서울시 구별 CCTV 인구 현황.csv')
     df = pd.read_csv(filename, index_col='구별')
-    geo_data = json.load(open(f'{static_path}/data/seoul_geo_simple.json', encoding='utf-8'))
+    geo_file = os.path.join(static_path, 'data/seoul_geo_simple.json')
+    geo_data = json.load(open(geo_file, encoding='utf-8'))
 
     map = folium.Map([37.55, 126.98], zoom_start=11, tiles='Stamen Toner')
     folium.Choropleth(
@@ -101,7 +104,8 @@ def get_cctv_pop(static_path, column, colormap):
             icon = folium.DivIcon(icon_size=(80,20), icon_anchor=(20,0),
                         html=f'<span style="font-size: 10pt">{gu_name}</span>')
     ).add_to(map)
-    map.save(f'{static_path}/img/cctv_pop.html')
+    filename = os.path.join(static_path, 'result/cctv_pop.html')
+    map.save(filename)
 
 def get_coord(static_path, place):
     filename = os.path.join(static_path, 'keys/도로명주소apiKey.txt')

@@ -3,6 +3,7 @@ keys/
 upload/
 *.db
 profile/
+result/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

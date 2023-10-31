@@ -13,7 +13,7 @@ def station():
     else:
         stations = request.form.getlist('station')
         stations = [station for station in stations if len(station.strip()) != 0]
-        mu.get_station_map(current_app.root_path, stations)     # static/img/station_map.html 파일
+        mu.get_station_map(current_app.static_folder, stations)     # static/img/station_map.html 파일
         return render_template('map/station_res.html', menu=menu)
 
 @map_bp.route('/cctv_pop', methods=['GET','POST'])

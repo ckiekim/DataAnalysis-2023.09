@@ -25,7 +25,7 @@
                     $('#result_row').attr({'class': 'visible'});
                     result = JSON.parse(result);
                     $('#result_text').text(result.text);
-                    let url = "{{url_for('static', filename='img/ocr-result.png')}}" + '?q=' + result.mtime;
+                    let url = "{{url_for('static', filename='result/ocr-result.png')}}" + '?q=' + result.mtime;
                     console.log(url);
                     $('#img').attr({src: url});
                 }

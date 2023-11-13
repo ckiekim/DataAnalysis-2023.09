@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}객체 검출{% endblock %}
+{% block subtitle %}객체 검출 - 공공 인공지능 API{% endblock %}
+{% block content %}
+    <form action="/chatbot/yolo" method="post" enctype="multipart/form-data">
+        <table class="table table-borderless">
+            <tr>
+                <td><label class="col-form-label">검출할 파일</label></td>
+                <td><input type="file" id="image" name="image" class="form-control"></td>
+                <td><button type="submit" class="btn btn-primary">업로드</button></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

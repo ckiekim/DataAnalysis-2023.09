@@ -103,8 +103,12 @@ def ocr():
 @chatbot_bp.route('/yolo', methods=['GET','POST'])
 def yolo():
     if request.method == 'GET':
-        return render_template('chatbot/yolo_form.html', menu=menu)
+        return render_template('chatbot/yolo.html', menu=menu)
     else:
+        colordict = {'red':(255,0,0), 'green':(0,255,0), 'blue':(0,0,255)}
+        color = colordict[request.form['color']]
+        linewidth = int(request.form['linewidth'])
+        fontsize = int(request.form['fontsize'])
         file_image = request.files['image']
         img_file = os.path.join(current_app.static_folder, f'upload/{file_image.filename}')
         file_image.save(img_file)
@@ -126,21 +130,18 @@ def yolo():
 
         img = Image.open(img_file)
         draw = ImageDraw.Draw(img)
-        size = img.width + img.height
-        font_size = 16 if size < 1600 else 32 if size < 3200 else 48
-        line_width = 1 if size < 1600 else 2 if size < 3200 else 3
-        font = ImageFont.truetype('malgun.ttf', font_size)
+        font = ImageFont.truetype('malgun.ttf', fontsize)
         for obj in obj_list:
             name = obj['class']
             x, y = int(obj['x']), int(obj['y'])
             w, h = int(obj['width']), int(obj['height'])
-            draw.rectangle(((x,y),(x+w,y+h)), outline=(255,0,0), width=line_width)
-            draw.text((x+10, y+10), name, font=font, fill=(255,0,0))
+            draw.rectangle(((x,y),(x+w,y+h)), outline=color, width=linewidth)
+            draw.text((x+10, y+10), name, font=font, fill=color)
 
         savefile = os.path.join(current_app.static_folder, 'result/yolo.png')
         plt.imshow(img)
         plt.axis('off')
-        plt.savefig(savefile, format='png')
+        plt.savefig(savefile, dpi=180, bbox_inches='tight')
         mtime = os.stat(savefile).st_mtime
 
-        return render_template('chatbot/yolo_res.html', menu=menu, mtime=mtime)
+        return json.dumps(str(mtime))

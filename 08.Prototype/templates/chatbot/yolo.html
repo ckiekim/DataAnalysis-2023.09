@@ -9,7 +9,7 @@
             let color = $("input[name='color']:checked").val();
             let linewidth = $('#linewidth').val();
             let fontsize = $('#fontsize').val();
-            let imagefile = $('#image')[0].files[0];
+            let imagefile = $('#yoloimage')[0].files[0];
             let formData = new FormData();
             formData.append('color', color);
             formData.append('linewidth', linewidth);
@@ -24,7 +24,7 @@
                 success: function(result) {
                     let mtime = JSON.parse(result);
                     let url = "{{url_for('static', filename='result/yolo.png')}}" + '?q=' + mtime;
-                    $('#img').attr({src: url, width: '100%'});
+                    $('#yoloimg').attr({src: url, width: '100%'});
                 }
             });
         }
@@ -35,7 +35,7 @@
     <table class="table table-borderless">
         <tr>
             <td style="width:15%"><label class="col-form-label">검출할 파일</label></td>
-            <td style="width:60%"><input type="file" id="image" name="image" class="form-control"></td>
+            <td style="width:60%"><input type="file" id="yoloimage" class="form-control"></td>
             <td style="width:25%">
                 <button class="btn btn-primary" onclick="send()">업로드</button>
                 <button class="btn btn-secondary" onclick="option()">옵션</button>
@@ -43,7 +43,7 @@
         </tr>
     </table>
     <div class="d-flex justify-content-center">
-        <img id="img">
+        <img id="yoloimg">
     </div>
 {% endblock %}
 {% block additional_body %}

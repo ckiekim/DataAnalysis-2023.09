@@ -5,9 +5,6 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import util.chatbot_util as cu
-import requests, base64
-from PIL import Image, ImageDraw, ImageFont
-import matplotlib.pyplot as plt
 
 chatbot_bp = Blueprint('chatbot_bp', __name__)
 
@@ -105,43 +102,12 @@ def yolo():
     if request.method == 'GET':
         return render_template('chatbot/yolo.html', menu=menu)
     else:
-        colordict = {'red':(255,0,0), 'green':(0,255,0), 'blue':(0,0,255)}
-        color = colordict[request.form['color']]
+        color = request.form['color']
         linewidth = int(request.form['linewidth'])
         fontsize = int(request.form['fontsize'])
         file_image = request.files['image']
         img_file = os.path.join(current_app.static_folder, f'upload/{file_image.filename}')
         file_image.save(img_file)
-        img_type = img_file.split('.')[-1]
-        if img_type == 'jfif':
-            img_type = 'jpg'
 
-        with open(os.path.join(current_app.static_folder, 'keys/etriAiKey.txt')) as f:
-            accessKey = f.read()
-        with open(img_file, 'rb') as f:
-            img_content = base64.b64encode(f.read()).decode("utf8")
-        openApiURL = "http://aiopen.etri.re.kr:8000/ObjectDetect"
-        headers={"Content-Type": "application/json; charset=UTF-8","Authorization": accessKey}
-        requestJson = { "argument": { "type": img_type, "file": img_content } }
-        result = requests.post(
-            openApiURL, headers=headers, data=json.dumps(requestJson)
-        ).json()
-        obj_list = result['return_object']['data']
-
-        img = Image.open(img_file)
-        draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype('malgun.ttf', fontsize)
-        for obj in obj_list:
-            name = obj['class']
-            x, y = int(obj['x']), int(obj['y'])
-            w, h = int(obj['width']), int(obj['height'])
-            draw.rectangle(((x,y),(x+w,y+h)), outline=color, width=linewidth)
-            draw.text((x+10, y+10), name, font=font, fill=color)
-
-        savefile = os.path.join(current_app.static_folder, 'result/yolo.png')
-        plt.imshow(img)
-        plt.axis('off')
-        plt.savefig(savefile, dpi=180, bbox_inches='tight')
-        mtime = os.stat(savefile).st_mtime
-
+        mtime = cu.proc_yolo(current_app.static_folder, img_file, color, linewidth, fontsize)
         return json.dumps(str(mtime))

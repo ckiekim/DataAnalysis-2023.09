@@ -6,6 +6,7 @@
             $('#optionModal').modal('show');
         }
         function send() {
+            $('#yoloimg').attr({src: "{{url_for('static', filename='img/please-wait.gif')}}", width: 498});
             let color = $("input[name='color']:checked").val();
             let linewidth = $('#linewidth').val();
             let fontsize = $('#fontsize').val();
@@ -42,7 +43,7 @@
             </td>
         </tr>
     </table>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
         <img id="yoloimg">
     </div>
 {% endblock %}

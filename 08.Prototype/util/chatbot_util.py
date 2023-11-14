@@ -85,6 +85,7 @@ def proc_yolo(static_folder, img_file, color, linewidth, fontsize):
         draw.text((x+10, y+10), name, font=font, fill=color)
 
     savefile = os.path.join(static_folder, 'result/yolo.png')
+    plt.figure()
     plt.imshow(img)
     plt.axis('off')
     plt.savefig(savefile, dpi=180, bbox_inches='tight')

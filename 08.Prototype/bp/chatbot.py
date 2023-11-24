@@ -5,6 +5,7 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import util.chatbot_util as cu
+from urllib.parse import unquote
 
 chatbot_bp = Blueprint('chatbot_bp', __name__)
 
@@ -32,6 +33,17 @@ def counsel():
             'category':answer.구분, 'user':user_input, 'chatbot':answer.챗봇, 'similarity':answer.유사도
         }
         return json.dumps(result)
+
+@chatbot_bp.route('/counsel_rest')
+def counsel_rest():
+    user_input = unquote(request.args.get('userInput'))
+    embedding = model.encode(user_input)
+    wdf['유사도'] = wdf.embedding.map(lambda x: cosine_similarity([embedding],[x]).squeeze())
+    answer = wdf.loc[wdf.유사도.idxmax()]
+    result = {
+        'category':answer.구분, 'user':user_input, 'chatbot':answer.챗봇, 'similarity':answer.유사도
+    }
+    return json.dumps(result)
 
 @chatbot_bp.route('/legal', methods=['GET','POST'])
 def legal():
